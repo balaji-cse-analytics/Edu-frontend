@@ -152,12 +152,22 @@ const TeacherDashboard = () => {
     setShowReportModal(true);
   };
 
-  const handleDownloadSubmission = (sub) => {
-    if (!sub?.filePath) {
+  const handleDownloadSubmission = async (sub) => {
+    if (!sub?._id) {
       toast.info('No file was uploaded for this submission.');
       return;
     }
-    window.open(sub.filePath, '_blank', 'noopener,noreferrer');
+    try {
+      const res = await api.get(`/submissions/${sub._id}/download`, { responseType: 'blob' });
+      const url = window.URL.createObjectURL(res.data);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = sub.fileName || 'submission';
+      a.click();
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      toast.error('Download failed');
+    }
   };
 
   if (loading) {

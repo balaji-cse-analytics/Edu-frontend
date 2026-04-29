@@ -6,15 +6,6 @@ const api = axios.create({
 });
 
 export const API_BASE_URL = api.defaults.baseURL;
-export const SERVER_BASE_URL = String(API_BASE_URL || '').replace(/\/api\/?$/, '');
-
-export function getUploadUrl(filePath) {
-  if (!filePath) return null;
-  const normalized = String(filePath).replace(/\\/g, '/').replace(/^\/+/, '');
-  // multer stores e.g. "uploads/123.pdf" (relative). We serve it at "/uploads".
-  const relative = normalized.startsWith('uploads/') ? normalized : `uploads/${normalized.replace(/^uploads\/?/, '')}`;
-  return `${SERVER_BASE_URL}/${relative}`;
-}
 
 api.interceptors.request.use(
   (config) => {
