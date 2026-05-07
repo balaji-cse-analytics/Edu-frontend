@@ -27,7 +27,7 @@ function AppRoutes() {
           <div className="loader-orbit-dot" />
           <div className="loader-orbit-dot" />
         </div>
-        <p>Loading EduVault...</p>
+        <p>Loading EduVault by Balaji...</p>
       </div>
     );
   }
